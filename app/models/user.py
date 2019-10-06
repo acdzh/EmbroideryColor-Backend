@@ -1,17 +1,19 @@
 from app import db
+from werkzeug.security import generate_password_hash,check_password_hash
 
 
 class User(db.Model):
     __tablename__ = 'users'
     uid = db.Column(db.Integer, primary_key=True)
     nick_name = db.Column(db.String(80))
+    password = db.Column(db.String(255), nullable=True)
     email = db.Column(db.String(120), unique=True)
     sex = db.Column(db.Integer)
     is_verified = db.Column(db.Boolean)
     friend_ids = db.Column(db.JSON)
     other = db.Column(db.JSON)
 
-    def __init__(self, _nick_name, _email):
+    def __init__(self, _email, _password, _nick_name='NaN', _sex=2):
         users = self.query.all()
         max_uid = 10000
         for i in users:
@@ -25,6 +27,8 @@ class User(db.Model):
         self.friend_ids = []
         self.other = {}
 
+        self.password = generate_password_hash(_password)
+
     def __repr__(self):
         return self.json()
 
@@ -36,6 +40,23 @@ class User(db.Model):
             'sex': self.sex,
             'is_verified': self.is_verified,
             'friend_ids': self.friend_ids,
-            'error': self.other
+            'other': self.other
         }
+
+    def json_with_password(self):
+        j = self.json()
+        j["password"] = self.password
+        return j
+
+    def get_uid(self):
+        return self.uid
+
+    def get_passwd(self):
+        return self.password
+
+    def get_email(self):
+        return self.email
+
+    def check_passwd(self, _password):
+        return check_password_hash(self.password, _password)
 

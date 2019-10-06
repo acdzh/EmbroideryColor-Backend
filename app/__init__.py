@@ -25,6 +25,7 @@ def regist_blueprints(app):
 def create_tables(app):
     from app.models.user import User
     from app.models.verify import Verify
+    from app.models.token import Token
     db.create_all(app=app)
 
 
