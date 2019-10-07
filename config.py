@@ -3,6 +3,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+    HOST = "https://ecre.xyz"
+    AVATAR_HOST = "{}/avatar".format(HOST)
+    AVATAR_DIR = './static/avatar'
+    FILE_HOST = "{}/files".format(HOST)
+    FILE_DIR = "./static/files"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JSON_AS_ASCII = False
 
@@ -30,5 +35,6 @@ config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
     'testing': TestingConfig,
-    'default': DevelopmentConfig
+    'default': DevelopmentConfig,
+    'basic': Config
 }

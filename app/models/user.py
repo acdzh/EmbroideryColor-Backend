@@ -1,4 +1,5 @@
 from app import db
+from app import config
 from werkzeug.security import generate_password_hash,check_password_hash
 
 
@@ -11,6 +12,7 @@ class User(db.Model):
     sex = db.Column(db.Integer)
     is_verified = db.Column(db.Boolean)
     friend_ids = db.Column(db.JSON)
+    avatar = db.Column(db.String(255))
     other = db.Column(db.JSON)
 
     def __init__(self, _email, _password, _nick_name='NaN', _sex=2):
@@ -25,6 +27,7 @@ class User(db.Model):
         self.sex = 2
         self.is_verified = False
         self.friend_ids = []
+        self.avatar = config['HOST'] + "/avatar/default.png"
         self.other = {}
 
         self.password = generate_password_hash(_password)
@@ -40,6 +43,7 @@ class User(db.Model):
             'sex': self.sex,
             'is_verified': self.is_verified,
             'friend_ids': self.friend_ids,
+            'avatar': self.avatar,
             'other': self.other
         }
 
@@ -57,6 +61,19 @@ class User(db.Model):
     def get_email(self):
         return self.email
 
+    def get_avarat(self):
+        return self.avatar
+
     def check_passwd(self, _password):
         return check_password_hash(self.password, _password)
+
+    def update(self, _info):
+        if 'avatar' in _info.keys():
+            self.avatar = _info["avatar"]
+        if 'nick_name' in _info.keys():
+            self.nick_name = _info["nick_name"]
+        if 'sex' in _info.keys():
+            self.sex = _info["sex"]
+        if 'other' in _info.keys():
+            self.other = {**self.other, **_info["other"]}
 

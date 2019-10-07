@@ -16,16 +16,19 @@ def create_app(config_name):
 
 
 def regist_blueprints(app):
+    from app.blueprints.file import file
     from app.blueprints.user import user
     from app.blueprints.error import error
+    app.register_blueprint(file, url_prefix='/file')
     app.register_blueprint(user, url_prefix='/user')
     app.register_blueprint(error, url_prefix='/error')
 
 
 def create_tables(app):
+    from app.models.file import File
+    from app.models.token import Token
     from app.models.user import User
     from app.models.verify import Verify
-    from app.models.token import Token
     db.create_all(app=app)
 
 
@@ -36,3 +39,6 @@ def create_views():
 app = create_app('development')
 
 create_views()
+
+def get_self():
+    return app

@@ -1,7 +1,8 @@
 from app import db
 
+
 class Token(db.Model):
-    __lablename__ = "tokens"
+    __tablename__ = "tokens"
     tokenid = db.Column(db.String(25), primary_key=True)
     uid = db.Column(db.Integer)
 
