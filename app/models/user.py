@@ -27,7 +27,7 @@ class User(db.Model):
         self.sex = 2
         self.is_verified = False
         self.friend_ids = []
-        self.avatar = config['HOST'] + "/avatar/default.png"
+        self.avatar = config['basic'].AVATAR_HOST + "/default.png"
         self.other = {}
 
         self.password = generate_password_hash(_password)
