@@ -30,6 +30,7 @@ class TestingConfig(Config):
 
 # 生产环境的配置
 class ProductionConfig(Config):
+    DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:root@localhost:5432/EmbroideryColor'
 
 

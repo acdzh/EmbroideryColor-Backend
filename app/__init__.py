@@ -12,6 +12,7 @@ def create_app(config_name):
     db.init_app(app)
     create_tables(app)
     regist_blueprints(app)
+    create_views(app)
     return app
 
 
@@ -27,7 +28,6 @@ def regist_blueprints(app):
     app.register_blueprint(user, url_prefix='/user')
 
 
-
 def create_tables(app):
     from app.models.file import File
     from app.models.token import Token
@@ -36,13 +36,10 @@ def create_tables(app):
     db.create_all(app=app)
 
 
-def create_views():
-    from app.views import helloworld
+def create_views(app):
+    from app.views import view
+    app.register_blueprint(view, url_prefix='')
 
-
-app = create_app('development')
-
-create_views()
-
-def get_self():
-    return app
+#
+# app = create_app('development')
+# create_views()

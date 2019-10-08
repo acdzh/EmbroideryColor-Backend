@@ -1,6 +1,6 @@
-from app import app
+from app.views import view
 
 
-@app.route('/helloworld', methods=['GET', 'POST'])
+@view.route('/helloworld', methods=['GET', 'POST'])
 def helloworld():
     return '<p>Hello, World</p>'
