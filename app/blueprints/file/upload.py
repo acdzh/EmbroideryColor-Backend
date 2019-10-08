@@ -4,6 +4,7 @@ from app import db
 from app.blueprints.file import file
 from app.models.file import File
 from app.models.token import Token
+from app.models.token import get_uid_by_tokenid
 
 from config import config
 from flask import jsonify, request
@@ -22,7 +23,7 @@ def file_upload():
             f.seek(0)
             f.save(config["basic"].FILE_DIR + "/{}".format(real_name))
         try:
-            uid = Token.query.filter_by(tokenid=request.form['tokenid']).first().get_uid()
+            uid = get_uid_by_tokenid(request.form['tokenid'])
             new_file = File(_uid=uid, _md5=md5, _src_name=name)
             print(new_file.json())
             db.session.add(new_file)

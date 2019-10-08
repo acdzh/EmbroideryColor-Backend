@@ -1,12 +1,11 @@
-import hashlib
-import pathlib
+import json, hashlib, pathlib
 
+from app import db
 from app.blueprints.user import user
 from app.models.user import User
-from app.models.token import Token
-from app import db
+from app.models.token import get_uid_by_tokenid
+
 from config import config
-import json
 
 from flask import jsonify, request
 
@@ -28,8 +27,7 @@ def modify_info():
     else:
         tokenid = str(body["tokenid"])
     try:
-        uid = Token.query.filter_by(tokenid=tokenid).first().get_uid()
-        t_user = User.query.filter_by(uid=uid).first()
+        t_user = User.query.filter_by(uid=get_uid_by_tokenid(tokenid)).first()
     except:
         return jsonify({'code': 2, 'msg': 'no such user'})
 
@@ -60,7 +58,7 @@ def update_avatar():
                 f.seek(0)
                 f.save(config["basic"].AVATAR_DIR + "/{}".format(real_name))
             try:
-                uid = Token.query.filter_by(tokenid=request.form['tokenid']).first().get_uid()
+                uid = get_uid_by_tokenid(request.form['tokenid'])
                 t_user = User.query.filter_by(uid=uid).first()
                 t_user.avatar = config["basic"].AVATAR_HOST + "/{}".format(real_name)
                 db.session.commit()
@@ -83,4 +81,3 @@ def update_avatar():
                  <input type=submit value=Upload>
             </form>
         '''
-

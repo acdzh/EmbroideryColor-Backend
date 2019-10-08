@@ -3,6 +3,13 @@ from config import config
 import time
 
 
+def get_all_files_by_uid(_uid):
+    files = []
+    for f in File.query.filter_by(uid=_uid).all():
+        files.append(f.json())
+    return files
+
+
 class File(db.Model):
     __tablename__ = 'files'
     fid = db.Column(db.Integer, primary_key=True, nullable=False)

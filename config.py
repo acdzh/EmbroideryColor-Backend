@@ -4,10 +4,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     HOST = "https://ecre.xyz"
-    AVATAR_HOST = "{}/avatar".format(HOST)
+    AVATAR_HOST = "{}/static/avatar".format(HOST)
     AVATAR_DIR = './static/avatar'
-    FILE_HOST = "{}/files".format(HOST)
+    FILE_HOST = "{}/static/files".format(HOST)
     FILE_DIR = "./static/files"
+
+    LIB_HOST = "{}/static/lib".format(HOST)
+    LIB_DIR = "./static/lib"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JSON_AS_ASCII = False
 

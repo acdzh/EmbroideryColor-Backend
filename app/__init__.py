@@ -16,12 +16,16 @@ def create_app(config_name):
 
 
 def regist_blueprints(app):
-    from app.blueprints.file import file
-    from app.blueprints.user import user
     from app.blueprints.error import error
-    app.register_blueprint(file, url_prefix='/file')
-    app.register_blueprint(user, url_prefix='/user')
+    from app.blueprints.file import file
+    from app.blueprints.lib import lib
+    from app.blueprints.user import user
+
     app.register_blueprint(error, url_prefix='/error')
+    app.register_blueprint(file, url_prefix='/file')
+    app.register_blueprint(lib, url_prefix='/lib')
+    app.register_blueprint(user, url_prefix='/user')
+
 
 
 def create_tables(app):
