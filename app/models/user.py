@@ -15,7 +15,7 @@ class User(db.Model):
     avatar = db.Column(db.String(255))
     other = db.Column(db.JSON)
 
-    def __init__(self, _email, _password, _nick_name='NaN', _sex=2):
+    def __init__(self, _email, _password, _nick_name='NaN'):
         users = self.query.all()
         max_uid = 10000
         for i in users:
