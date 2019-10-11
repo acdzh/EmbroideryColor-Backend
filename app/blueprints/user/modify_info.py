@@ -48,7 +48,10 @@ def modify_info():
 def update_avatar():
     if request.method == 'POST':
         f = request.files['file']
-        name = request.form['name']
+        if "name" in request.form:
+            name = request.form["name"]
+        else:
+            name = f.filename
         if allowed_file(name):
             md5 = hashlib.md5(f.read()).hexdigest()
             real_name = "{}.{}".format(md5, name.rsplit('.', 1)[1])

@@ -14,7 +14,10 @@ from flask import jsonify, request
 def file_upload():
     if request.method == 'POST':
         f = request.files['file']
-        name = request.form['name']
+        if "name" in request.form:
+            name = request.form["name"]
+        else:
+            name = f.filename
         md5 = hashlib.md5(f.read()).hexdigest()
         real_name = "{}.{}".format(md5, name.rsplit('.', 1)[1])
         if pathlib.Path(config["basic"].FILE_DIR + "/{}".format(real_name)).is_file():
