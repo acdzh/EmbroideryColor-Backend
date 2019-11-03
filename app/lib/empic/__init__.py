@@ -10,11 +10,10 @@ def find_color(src, TILERS_COUNT):
     for i in tiler_colors[0:TILERS_COUNT]:
         difference = (abs(src[0] - i[2]) + abs(src[1] - i[3]) + abs(src[2] - i[4])) / 3
         if difference == 0:
-            return i[0]
+            return i
         if difference < min_difference:
             min_index = i[0]
             min_difference = difference
-
     return tiler_colors[min_index]
 
 
@@ -44,4 +43,3 @@ def get_pic(srcfile="./src/lena.jpg", picpath='./pic', width_dimension=20, TILER
     filename = "{}.png".format(int(time.time()))
     cv2.imwrite("{}/{}".format(picpath, filename), arr)
     return filename
-
